@@ -62,6 +62,7 @@ namespace TechChallenge_Contatos.Repository
                 {
                     var DDD = ContatoRepositoryDomain.GetDDDFromStringTelefone(dadosContato.Telefone);
 
+
                     var RecuperarIdDDD = _dbConnection.Query("Select Id from DDD where NumDDD = @NUMDDD", new { NUMDDD = DDD }).SingleOrDefault();
 
                     if (RecuperarIdDDD != null)

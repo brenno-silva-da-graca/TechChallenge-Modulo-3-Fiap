@@ -1,6 +1,10 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using RabbitMQ.Client.Events;
+using RabbitMQ.Client;
+using System.Text;
+using System.Text.Json;
 
 namespace InfrastructureWebApi.Controllers
 {
@@ -9,10 +13,16 @@ namespace InfrastructureWebApi.Controllers
     public class ContatosController : ControllerBase
     {
         private readonly IContatoCadastro _contatoCadastro;
+        private readonly IConnectionFactory _rabbitConnectionFactory;
+        private readonly ILogger _logger;   
 
-        public ContatosController(IContatoCadastro contatoCadastro)
+        public ContatosController(IContatoCadastro contatoCadastro, ILoggerFactory loggerFactory)
         {
             _contatoCadastro = contatoCadastro;
+            _logger = loggerFactory.CreateLogger(nameof(ContatosController));
+            _rabbitConnectionFactory = new ConnectionFactory { HostName = "rabbitQueue" };
+
+            SetupPostContato();
         }
 
         [HttpGet("Listar")]
@@ -27,21 +37,35 @@ namespace InfrastructureWebApi.Controllers
             return Ok(_contatoCadastro.ListarPorDDD(NumDDD));
         }
 
-        [HttpPost("Inserir")]
-        public IActionResult PostContato([FromBody] Contato dadosContato)
+        private void SetupPostContato()
         {
-            Retorno retornoVal = new Retorno();
+            using var connection = _rabbitConnectionFactory.CreateConnection();
+            using var channel = connection.CreateModel();
 
-            dadosContato = _contatoCadastro.CriarContato(dadosContato, out retornoVal);
+            channel.QueueDeclare(queue: "PostContato",
+                                 durable: false,
+                                 exclusive: false,
+                                 autoDelete: false,
+                                 arguments: null);
 
-            if (retornoVal.Codigo != 200)
+            var consumer = new EventingBasicConsumer(channel);
+
+            consumer.Received += async (model, ea) =>
             {
-                return StatusCode(retornoVal.Codigo, retornoVal);
-            }
+                    var body = ea.Body.ToArray();
+                    var message = Encoding.UTF8.GetString(body);
+                    var dadosContato = JsonSerializer.Deserialize<Contato>(message);
 
-            return Ok(dadosContato);
+                    _contatoCadastro.CriarContato(dadosContato, out var _);
 
+                    _logger.LogInformation($"Contato adicionado {dadosContato.DDDID}");
+            };
+
+            channel.BasicConsume(queue: "PostContato",
+                                 autoAck: true,
+                                 consumer: consumer);
         }
+
         [HttpPut("Atualizar")]
         public IActionResult PutContato([FromBody] Contato dadosContato, int Id)
         {

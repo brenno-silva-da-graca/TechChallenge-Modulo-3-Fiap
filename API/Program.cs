@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using Application.Interfaces;
 using Infrastructure.Repositories;
 using TechChallenge_Contatos.Repository;
+using RabbitMQ.Client;
 
 namespace API
 {
@@ -26,6 +27,7 @@ namespace API
 
             builder.Services.AddScoped<IContatoCadastro, ContatoRepository>();
             builder.Services.AddScoped<IDDDCadastro, DDDRepository>();
+            builder.Services.AddScoped<IConnectionFactory, ConnectionFactory>();
 
             var stringConexao = configuration.GetValue<string>("ConnectionStringSQL");
 
