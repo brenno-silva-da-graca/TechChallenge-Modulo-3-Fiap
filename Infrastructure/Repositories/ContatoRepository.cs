@@ -96,6 +96,7 @@ namespace TechChallenge_Contatos.Repository
             var ComandoSQL = @"update contatos Set nome = @Nome, telefone = @Telefone, email = @Email,DDDID = @DDDID where ID = @ID";
             _dbConnection.Execute(ComandoSQL, dadosContato);
         }
+
         public void DeletarContato(int Id)
         {
             var comandoSQL = @"DELETE FROM CONTATOS WHERE ID = @ID";

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using RabbitMQ.Client;
 using System.Text;
 
-
 namespace API.Controllers
 {
     [Route("api/[controller]")]
@@ -65,7 +64,7 @@ namespace API.Controllers
                      exclusive: false,
                      autoDelete: false,
                      arguments: null);
-
+            dadosContato.Id = id;
             var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(dadosContato));
 
             channel.BasicPublish(exchange: string.Empty,
@@ -82,7 +81,7 @@ namespace API.Controllers
             using var connection = _rabbitConnectionFactory.CreateConnection();
             using var channel = connection.CreateModel();
 
-            channel.QueueDeclare(queue: "PatchContato",
+            channel.QueueDeclare(queue: "DeleteContato",
                      durable: false,
                      exclusive: false,
                      autoDelete: false,
@@ -91,7 +90,7 @@ namespace API.Controllers
             var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(Id));
 
             channel.BasicPublish(exchange: string.Empty,
-                                 routingKey: "PatchContato",
+                                 routingKey: "DeleteContato",
                                  basicProperties: null,
                                  body: body);
 

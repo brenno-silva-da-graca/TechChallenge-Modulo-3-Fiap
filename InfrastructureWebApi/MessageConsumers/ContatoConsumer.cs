@@ -57,6 +57,6 @@ namespace InfrastructureWebApi.MessageConsumers
             contatoCadastro.DeletarContato(id);
 
             Logger.LogInformation($"Contato id:[{id}] removido");
-        }
+        };
     }
 }

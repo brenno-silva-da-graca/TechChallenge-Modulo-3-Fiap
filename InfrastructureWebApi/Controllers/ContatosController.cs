@@ -64,7 +64,7 @@ namespace InfrastructureWebApi.Controllers
                                  consumer: consumer);
         }
 
-        public void SetupPatchContato()
+        private void SetupPatchContato()
         {
             using var connection = _rabbitConnectionFactory.CreateConnection();
             using var channel = connection.CreateModel();
@@ -84,7 +84,7 @@ namespace InfrastructureWebApi.Controllers
                                  consumer: consumer);
         }
 
-        public void SetupDeleteContato()
+        private void SetupDeleteContato()
         {
             using var connection = _rabbitConnectionFactory.CreateConnection();
             using var channel = connection.CreateModel();
