@@ -13,6 +13,7 @@ namespace TechChallenge_Contatos.Repository
         {
             _dbConnection = dbConnection;
         }
+
         public IEnumerable<ContatoDDD> ListarContatos()
         {
             var ComandoSql = @"SELECT * FROM Contatos inner join DDD on DDD.id = Contatos.DDDID";
@@ -21,6 +22,7 @@ namespace TechChallenge_Contatos.Repository
             (ComandoSql, map: (ContatoDDD, DDD) => { ContatoDDD.DDD = DDD; return ContatoDDD; }
             , splitOn: "Id,DDDID");
         }
+
         public IEnumerable<ContatoDDD> ListarPorDDD(int NumDDD)
         {
             var ComandoSql = @"SELECT * FROM Contatos inner join DDD on DDD.id = Contatos.DDDID WHERE DDD.NumDDD = @NUMDDD";
@@ -30,6 +32,7 @@ namespace TechChallenge_Contatos.Repository
             new { NUMDDD = NumDDD }, splitOn: "Id,DDDID");
 
         }
+
         public Contato CriarContato(Contato dadosContato, out Retorno ret)
         {
             ret = new Retorno();
