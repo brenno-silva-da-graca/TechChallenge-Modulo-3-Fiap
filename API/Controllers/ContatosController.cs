@@ -57,15 +57,45 @@ namespace API.Controllers
         [HttpPut("Atualizar")]
         public IActionResult PutContato([FromBody] Contato dadosContato, int Id)
         {
-            dadosContato.Id = Id;
-            _contatoCadastro.AtualizarContato(dadosContato);
-            return Ok();
+            using var connection = _rabbitConnectionFactory.CreateConnection();
+            using var channel = connection.CreateModel();
+
+            channel.QueueDeclare(queue: "PatchContato",
+                     durable: false,
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
+
+            var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(dadosContato));
+
+            channel.BasicPublish(exchange: string.Empty,
+                                 routingKey: "PatchContato",
+                                 basicProperties: null,
+                                 body: body);
+
+            return Ok(dadosContato);
         }
+
         [HttpDelete("Deletar")]
         public IActionResult DeleteContato(int Id)
         {
-            _contatoCadastro.DeletarContato(Id);
-            return Ok();
+            using var connection = _rabbitConnectionFactory.CreateConnection();
+            using var channel = connection.CreateModel();
+
+            channel.QueueDeclare(queue: "PatchContato",
+                     durable: false,
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
+
+            var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(Id));
+
+            channel.BasicPublish(exchange: string.Empty,
+                                 routingKey: "PatchContato",
+                                 basicProperties: null,
+                                 body: body);
+
+            return Ok(Id);
         }
     }
 }
