@@ -24,10 +24,7 @@ namespace API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-            builder.Services.AddScoped<IContatoCadastro, ContatoRepository>();
-            builder.Services.AddScoped<IDDDCadastro, DDDRepository>();
-            builder.Services.AddScoped<IConnectionFactory, ConnectionFactory>();
+            builder.Services.AddScoped<IConnectionFactory, ConnectionFactory>(provider => new ConnectionFactory { HostName = "rabbitQueue" });
 
             var stringConexao = configuration.GetValue<string>("ConnectionStringSQL");
 

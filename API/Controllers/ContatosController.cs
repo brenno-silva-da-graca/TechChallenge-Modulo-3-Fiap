@@ -14,7 +14,7 @@ namespace API.Controllers
 
         public ContatosController(IConnectionFactory rabbitConnectionFactory)
         {
-            _rabbitConnectionFactory = new ConnectionFactory { HostName = "rabbitQueue"};
+            _rabbitConnectionFactory = rabbitConnectionFactory;
         }
 
         [HttpPost("Inserir")]
