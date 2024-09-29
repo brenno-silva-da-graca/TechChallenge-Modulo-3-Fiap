@@ -10,25 +10,11 @@ namespace API.Controllers
     [ApiController]
     public class ContatosController : ControllerBase
     {
-        private readonly IContatoCadastro _contatoCadastro;
         private readonly IConnectionFactory _rabbitConnectionFactory;
 
-        public ContatosController(IContatoCadastro contatoCadastro, IConnectionFactory rabbitConnectionFactory)
+        public ContatosController(IConnectionFactory rabbitConnectionFactory)
         {
-            _contatoCadastro = contatoCadastro;
             _rabbitConnectionFactory = new ConnectionFactory { HostName = "rabbitQueue"};
-        }
-
-        [HttpGet("Listar")]
-        public IActionResult GetContato()
-        {
-            return Ok(_contatoCadastro.ListarContatos());
-        }
-
-        [HttpGet("ListarPorDDD")]
-        public IActionResult ListarPorDDD(int NumDDD)
-        {
-            return Ok(_contatoCadastro.ListarPorDDD(NumDDD));
         }
 
         [HttpPost("Inserir")]
