@@ -54,3 +54,14 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - prometheus
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: "rabbitQueue"
+    hostname: "rabbitQueue"
+    ports:
+      - "5672:5672"  # RabbitMQ default port
+      - "15672:15672" # RabbitMQ management UI (if enabled)
+    environment:
+      RABBITMQ_DEFAULT_USER: guest  # Default username
+      RABBITMQ_DEFAULT_PASS: guest # Default password

@@ -2,6 +2,8 @@ using System.Data;
 using System.Data.SqlClient;
 using Application.Interfaces;
 using Infrastructure.Repositories;
+using InfrastructureWebApi.MessageConsumers;
+using RabbitMQ.Client;
 using TechChallenge_Contatos.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,10 +20,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IContatoCadastro, ContatoRepository>();
 builder.Services.AddScoped<IDDDCadastro, DDDRepository>();
+builder.Services.AddScoped<IContatoConsumer, ContatoConsumer>();
 
 var stringConexao = configuration.GetValue<string>("ConnectionStringSQL");
 
-builder.Services.AddScoped<IDbConnection>((conexao) => new SqlConnection(stringConexao));
+builder.Services.AddTransient<IDbConnection>((conexao) => new SqlConnection(stringConexao));
 
 var app = builder.Build();
 

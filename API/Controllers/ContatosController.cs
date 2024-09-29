@@ -1,7 +1,8 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-
+using RabbitMQ.Client;
+using System.Text;
 
 namespace API.Controllers
 {
@@ -10,10 +11,12 @@ namespace API.Controllers
     public class ContatosController : ControllerBase
     {
         private readonly IContatoCadastro _contatoCadastro;
+        private readonly IConnectionFactory _rabbitConnectionFactory;
 
-        public ContatosController(IContatoCadastro contatoCadastro)
+        public ContatosController(IContatoCadastro contatoCadastro, IConnectionFactory rabbitConnectionFactory)
         {
             _contatoCadastro = contatoCadastro;
+            _rabbitConnectionFactory = new ConnectionFactory { HostName = "rabbitQueue"};
         }
 
         [HttpGet("Listar")]
@@ -31,30 +34,67 @@ namespace API.Controllers
         [HttpPost("Inserir")]
         public IActionResult PostContato([FromBody] Contato dadosContato)
         {
-            Retorno retornoVal = new Retorno();
+            using var connection = _rabbitConnectionFactory.CreateConnection();
+            using var channel = connection.CreateModel();
+            
+            channel.QueueDeclare(queue: "PostContato",
+                     durable: false,
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
 
-            dadosContato = _contatoCadastro.CriarContato(dadosContato, out retornoVal);
+            var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(dadosContato));
 
-            if (retornoVal.Codigo != 200)
-            {
-                return StatusCode(retornoVal.Codigo, retornoVal);
-            }
+            channel.BasicPublish(exchange: string.Empty,
+                                 routingKey: "PostContato",
+                                 basicProperties: null,
+                                 body: body);
 
             return Ok(dadosContato);
+        }
 
-        }
         [HttpPut("Atualizar")]
-        public IActionResult PutContato([FromBody] Contato dadosContato, int Id)
+        public IActionResult PutContato([FromBody] Contato dadosContato, int id)
         {
-            dadosContato.Id = Id;
-            _contatoCadastro.AtualizarContato(dadosContato);
-            return Ok();
+            using var connection = _rabbitConnectionFactory.CreateConnection();
+            using var channel = connection.CreateModel();
+
+            channel.QueueDeclare(queue: "PatchContato",
+                     durable: false,
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
+            dadosContato.Id = id;
+            var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(dadosContato));
+
+            channel.BasicPublish(exchange: string.Empty,
+                                 routingKey: "PatchContato",
+                                 basicProperties: null,
+                                 body: body);
+
+            return Ok(dadosContato);
         }
+
         [HttpDelete("Deletar")]
         public IActionResult DeleteContato(int Id)
         {
-            _contatoCadastro.DeletarContato(Id);
-            return Ok();
+            using var connection = _rabbitConnectionFactory.CreateConnection();
+            using var channel = connection.CreateModel();
+
+            channel.QueueDeclare(queue: "DeleteContato",
+                     durable: false,
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
+
+            var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(Id));
+
+            channel.BasicPublish(exchange: string.Empty,
+                                 routingKey: "DeleteContato",
+                                 basicProperties: null,
+                                 body: body);
+
+            return Ok(Id);
         }
     }
 }
