@@ -46,17 +46,12 @@ jobs:
 
     services:
       mssql:
-        image: mcr.microsoft.com/mssql/server:2022-latest
+        image: mcr.microsoft.com/mssql/server:2019-latest
         ports:
-          - 1433:1433
+          - 1450:1433
         env:
           SA_PASSWORD: "Fiap@2024"
           ACCEPT_EULA: "Y"
-        options: >-
-          --health-cmd "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Fiap@2024' -Q 'SELECT 1'"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     steps:
       - name: Checkout repository
@@ -68,7 +63,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Wait for SQL Server to be ready
-        run: sleep 30
+        run: sleep 60
 
       - name: Run integration tests
         env:
