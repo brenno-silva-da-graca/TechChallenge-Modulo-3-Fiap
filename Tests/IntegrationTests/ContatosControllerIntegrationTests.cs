@@ -1,8 +1,7 @@
-﻿using Xunit;
-using Dapper;
-using System.Data;
+﻿using Dapper;
 using Microsoft.Extensions.DependencyInjection;
-using System;
+using System.Data;
+using Xunit;
 
 namespace IntegrationTests
 {

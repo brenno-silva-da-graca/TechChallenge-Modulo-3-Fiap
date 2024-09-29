@@ -1,11 +1,8 @@
-using Prometheus;
-using System.Data;
 using API.Services;
-using System.Data.SqlClient;
-using Application.Interfaces;
-using Infrastructure.Repositories;
-using TechChallenge_Contatos.Repository;
+using Prometheus;
 using RabbitMQ.Client;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace API
 {
