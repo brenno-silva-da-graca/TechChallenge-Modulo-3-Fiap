@@ -54,7 +54,7 @@ namespace API.Controllers
         }
 
         [HttpPut("Atualizar")]
-        public IActionResult PutContato([FromBody] Contato dadosContato, int Id)
+        public IActionResult PutContato([FromBody] Contato dadosContato, int id)
         {
             using var connection = _rabbitConnectionFactory.CreateConnection();
             using var channel = connection.CreateModel();
