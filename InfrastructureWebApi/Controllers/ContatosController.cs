@@ -1,12 +1,7 @@
-﻿using Application.Interfaces;
-using Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
+﻿using RabbitMQ.Client;
+using Application.Interfaces;
 using RabbitMQ.Client.Events;
-using RabbitMQ.Client;
-using System.Text;
-using System.Text.Json;
-using TechChallenge_Contatos.Repository;
-using System.Data.SqlClient;
+using Microsoft.AspNetCore.Mvc;
 using InfrastructureWebApi.MessageConsumers;
 
 namespace InfrastructureWebApi.Controllers

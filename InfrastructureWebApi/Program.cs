@@ -2,9 +2,8 @@ using System.Data;
 using System.Data.SqlClient;
 using Application.Interfaces;
 using Infrastructure.Repositories;
-using InfrastructureWebApi.MessageConsumers;
-using RabbitMQ.Client;
 using TechChallenge_Contatos.Repository;
+using InfrastructureWebApi.MessageConsumers;
 
 var builder = WebApplication.CreateBuilder(args);
 
