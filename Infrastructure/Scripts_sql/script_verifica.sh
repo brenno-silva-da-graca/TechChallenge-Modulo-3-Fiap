@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Define uma função para verificar se o SQL Server está pronto
 wait_for_sqlserver() {
     echo "Aguardando o SQL Server iniciar..."
