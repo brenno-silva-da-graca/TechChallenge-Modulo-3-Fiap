@@ -10,6 +10,11 @@ namespace WorkerMessageConsumer
     {
         public static void Main(string[] args)
         {
+            int seconds = 15;
+            int delaySeconds = seconds * 1000;
+            Console.WriteLine("Starting delay of all workers");
+            Thread.Sleep(delaySeconds);
+
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
@@ -24,9 +29,6 @@ namespace WorkerMessageConsumer
             builder.Services.AddScoped<IContatoCadastro, ContatoRepository>();
 
             var host = builder.Build();
-
-            int seconds = 30;
-            Task.Delay(seconds * 1000);
 
             Console.WriteLine("Starting all workers");
             host.Run();

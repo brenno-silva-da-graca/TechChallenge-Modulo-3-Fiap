@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   api:
-    image: ${DOCKER_REGISTRY-}api
+    image: rafaxzx/api:latest
     build:
       context: .
       dockerfile: API/Dockerfile
@@ -59,7 +59,7 @@ services:
       RABBITMQ_DEFAULT_PASS: guest # Default password
 
   worker:
-    image: ${DOCKER_REGISTRY-}workermessageconsumer
+    image: rafaxzx/workermessageconsumer:latest
     build:
       context: .
       dockerfile: WorkerMessageConsumer/Dockerfile
