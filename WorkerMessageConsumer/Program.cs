@@ -24,6 +24,10 @@ namespace WorkerMessageConsumer
             builder.Services.AddScoped<IContatoCadastro, ContatoRepository>();
 
             var host = builder.Build();
+
+            int seconds = 30;
+            Task.Delay(seconds * 1000);
+
             Console.WriteLine("Starting all workers");
             host.Run();
         }
