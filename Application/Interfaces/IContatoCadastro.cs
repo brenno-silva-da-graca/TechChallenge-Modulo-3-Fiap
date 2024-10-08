@@ -10,7 +10,7 @@ namespace Application.Interfaces
 
         public Contato CriarContato(Contato dadosContato, out Retorno ret);
 
-        public void AtualizarContato(Contato dadosContato);
+        public void AtualizarContato(ContatoDTO dadosContato);
 
         public void DeletarContato(int Id);
 

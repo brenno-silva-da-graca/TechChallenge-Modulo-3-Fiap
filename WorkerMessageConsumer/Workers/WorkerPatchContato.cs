@@ -45,7 +45,7 @@ namespace WorkerMessageConsumer.Workers
         {
             using var scope = _serviceProvider.CreateAsyncScope();
 
-            var dadosContato = JsonSerializer.Deserialize<Contato>(message);
+            var dadosContato = JsonSerializer.Deserialize<ContatoDTO>(message);
             var contatoCadastro = scope.ServiceProvider.GetRequiredService<IContatoCadastro>();
 
             contatoCadastro.AtualizarContato(dadosContato);

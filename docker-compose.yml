@@ -18,21 +18,6 @@ services:
        - grafana
        - worker
 
-  infrastructurewebapi:
-    image: ${DOCKER_REGISTRY-}infrastructurewebapi
-    build:
-      context: .
-      dockerfile: InfrastructureWebApi/Dockerfile
-    environment:
-       - ASPNETCORE_ENVIRONMENT=Development
-       - ASPNETCORE_HTTP_PORTS=8080
-    ports: 
-       - "32768:8080"
-    depends_on:
-        - sqldata
-        - prometheus
-        - rabbitmq
-
   sqldata:
     image: mcr.microsoft.com/mssql/server:2019-latest
     
@@ -80,3 +65,4 @@ services:
       dockerfile: WorkerMessageConsumer/Dockerfile
     depends_on:
       - rabbitmq
+      - sqldata

@@ -90,13 +90,13 @@ namespace TechChallenge_Contatos.Repository
             return dadosContato;
         }
 
-        public void AtualizarContato(Contato dadosContato)
+        public void AtualizarContato(ContatoDTO dadosContato)
         {
             var DDD = ContatoRepositoryDomain.GetDDDFromStringTelefone(dadosContato.Telefone);
 
             dadosContato.DDDID = _dbConnection.Query("Select Id from DDD where NumDDD = @NUMDDD", new { NUMDDD = DDD }).SingleOrDefault().Id;
 
-            var ComandoSQL = @"update contatos Set nome = @Nome, telefone = @Telefone, email = @Email,DDDID = @DDDID where ID = @ID";
+            var ComandoSQL = @"update Contatos Set nome = @Nome, telefone = @Telefone, email = @Email,DDDID = @DDDID where ID = @ID";
             _dbConnection.Execute(ComandoSQL, dadosContato);
         }
 

@@ -56,6 +56,13 @@ namespace API.Controllers
         [HttpPut("Atualizar")]
         public IActionResult PutContato([FromBody] Contato dadosContato, int id)
         {
+            var contatoDTO = new ContatoDTO{
+                Id = id,
+                Nome = dadosContato.Nome,
+                Email=dadosContato.Email,
+                Telefone = dadosContato.Telefone
+            };
+
             using var connection = _rabbitConnectionFactory.CreateConnection();
             using var channel = connection.CreateModel();
 
@@ -64,8 +71,8 @@ namespace API.Controllers
                      exclusive: false,
                      autoDelete: false,
                      arguments: null);
-            dadosContato.Id = id;
-            var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(dadosContato));
+
+            var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(contatoDTO));
 
             channel.BasicPublish(exchange: string.Empty,
                                  routingKey: "PatchContato",
