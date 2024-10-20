@@ -52,11 +52,11 @@ services:
     container_name: "rabbitQueue"
     hostname: "rabbitQueue"
     ports:
-      - "5672:5672"  # RabbitMQ default port
-      - "15672:15672" # RabbitMQ management UI (if enabled)
+      - "5672:5672"
+      - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: guest  # Default username
-      RABBITMQ_DEFAULT_PASS: guest # Default password
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
 
   worker:
     image: rafaxzx/workermessageconsumer:latest

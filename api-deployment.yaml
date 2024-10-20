@@ -5,7 +5,7 @@ metadata:
   labels:
     app: api
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: api
@@ -15,8 +15,8 @@ spec:
         app: api
     spec:
       containers:
-        - name: rafaxzx/api:latest
-          image: api
+        - name: api
+          image: rafaxzx/api:dev
           ports:
             - containerPort: 80
           envFrom:

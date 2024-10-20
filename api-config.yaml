@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+  labels:
+    app: api
+data:
+  ConnectionStrings__Database: "Server=mssql-service;Database=FIAP;User Id=sa;Password=Fiap@2024;"
+  RabbitMQ__Host: "rabbitmq-service"
+  Logging__LogLevel__Default: "Information"

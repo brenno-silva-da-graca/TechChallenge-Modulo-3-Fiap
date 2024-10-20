@@ -5,7 +5,7 @@ metadata:
   labels:
     app: worker
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: worker
@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
         - name: worker-container
-          image: rafaxzx/workermessageconsumer:latest
+          image: rafaxzx/workermessageconsumer:dev
           envFrom:
             - configMapRef:
-                name: worker-config # ConfigMap para o Worker
+                name: worker-config
           ports:
             - containerPort: 80
