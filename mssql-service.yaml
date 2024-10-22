@@ -11,4 +11,5 @@ spec:
     - protocol: TCP
       port: 1450
       targetPort: 1433
-  type: ClusterIP
+      nodePort: 30433
+  type: NodePort

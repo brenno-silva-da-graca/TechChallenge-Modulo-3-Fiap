@@ -9,6 +9,7 @@ spec:
     app: api
   ports:
     - protocol: TCP
-      port: 58745
-      targetPort: 8080
-  type: ClusterIP
+      port: 58745 # porta cluster
+      targetPort: 8080 # porta container aplicaçao
+      nodePort: 30080 # porta exposta host
+  type: NodePort

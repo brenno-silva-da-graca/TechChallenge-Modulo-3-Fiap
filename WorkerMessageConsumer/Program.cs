@@ -18,7 +18,7 @@ namespace WorkerMessageConsumer
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
-            var stringConexao = configuration.GetValue<string>("ConnectionStringSQL");
+            var stringConexao = Environment.GetEnvironmentVariable("ConnectionStringSQL") ?? configuration.GetValue<string>("ConnectionStringSQL");
 
             var builder = Host.CreateApplicationBuilder(args);
             builder.Services.AddHostedService<WorkerPostContato>();

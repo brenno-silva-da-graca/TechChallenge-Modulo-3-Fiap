@@ -29,8 +29,8 @@ namespace API
             builder.Services.AddScoped<IDDDCadastro, DDDRepository>();
             builder.Services.AddScoped<IConnectionFactory, ConnectionFactory>();
 
-            var stringConexao = configuration.GetValue<string>("ConnectionStringSQL");
-
+            var stringConexao = Environment.GetEnvironmentVariable("ConnectionStringSQL") ?? configuration.GetValue<string>("ConnectionStringSQL"); 
+            
             builder.Services.AddScoped<IDbConnection>((conexao) => new SqlConnection(stringConexao));
 
             builder.Services.AddSingleton<MetricsService>();

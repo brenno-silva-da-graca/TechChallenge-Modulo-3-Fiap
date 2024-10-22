@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: worker-container
-          image: rafaxzx/workermessageconsumer:dev
+          image: rafaxzx/workermessageconsumer:latest
           envFrom:
             - configMapRef:
                 name: worker-config

@@ -6,5 +6,4 @@ metadata:
     app: worker
 data:
   RabbitMQ__Host: "rabbitmq-service"
-  RabbitMQ__QueueName: "contacts-queue"
   Logging__LogLevel__Default: "Information"

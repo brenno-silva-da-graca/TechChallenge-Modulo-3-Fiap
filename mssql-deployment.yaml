@@ -18,7 +18,7 @@ spec:
         - name: mssql-container
           image: mcr.microsoft.com/mssql/server:2019-latest
           ports:
-            - containerPort: 1433
+            - containerPort: 1450
           env:
             - name: ACCEPT_EULA
               value: "Y"

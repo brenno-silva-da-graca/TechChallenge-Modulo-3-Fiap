@@ -33,28 +33,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkerMessageConsumer", "Wo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7-K8s", "7-K8s", "{D0486A4A-9419-4CA6-8A5C-E12321098733}"
 	ProjectSection(SolutionItems) = preProject
-		api-deployment.yaml = api-deployment.yaml
 		api-config.yaml = api-config.yaml
+		api-deployment.yaml = api-deployment.yaml
 		api-service.yaml = api-service.yaml
-		grafana-deployment.yaml = grafana-deployment.yaml
 		grafana-config.yaml = grafana-config.yaml
+		grafana-deployment.yaml = grafana-deployment.yaml
 		grafana-pvc.yaml = grafana-pvc.yaml
 		grafana-service.yaml = grafana-service.yaml
-		mssql-deployment.yaml = mssql-deployment.yaml
 		mssql-config.yaml = mssql-config.yaml
+		mssql-deployment.yaml = mssql-deployment.yaml
 		mssql-pvc.yaml = mssql-pvc.yaml
 		mssql-secret.yaml = mssql-secret.yaml
 		mssql-service.yaml = mssql-service.yaml
-		mssql-volume.yaml = mssql-volume.yaml
-		prometheus-deployment.yaml = prometheus-deployment.yaml
 		prometheus-config.yaml = prometheus-config.yaml
+		prometheus-deployment.yaml = prometheus-deployment.yaml
 		prometheus-pvc.yaml = prometheus-pvc.yaml
 		prometheus-service.yaml = prometheus-service.yaml
-		rabbitmq-deployment.yaml = rabbitmq-deployment.yaml
 		rabbitmq-config.yaml = rabbitmq-config.yaml
+		rabbitmq-deployment.yaml = rabbitmq-deployment.yaml
 		rabbitmq-service.yaml = rabbitmq-service.yaml
-		worker-deployment.yaml = worker-deployment.yaml
 		worker-config.yaml = worker-config.yaml
+		worker-deployment.yaml = worker-deployment.yaml
 		worker-service.yaml = worker-service.yaml
 	EndProjectSection
 EndProject
