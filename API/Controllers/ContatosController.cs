@@ -16,7 +16,7 @@ namespace API.Controllers
         public ContatosController(IContatoCadastro contatoCadastro, IConnectionFactory rabbitConnectionFactory)
         {
             _contatoCadastro = contatoCadastro;
-            _rabbitConnectionFactory = new ConnectionFactory { HostName = "rabbitQueue"};
+            _rabbitConnectionFactory = new ConnectionFactory { HostName = "rabbitmq-service", Port = 5672 };
         }
 
         [HttpGet("Listar")]

@@ -18,7 +18,7 @@ namespace WorkerMessageConsumer.Workers
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
-            var factory = new ConnectionFactory() { HostName = "rabbitmq-service" };
+            var factory = new ConnectionFactory() { HostName = "rabbitmq-service", Port = 5672 };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
 

@@ -5,5 +5,6 @@ metadata:
   labels:
     app: worker
 data:
+  ConnectionStringSQL: "Server=mssql-service,1450;Database=FIAP;User Id=sa;Password=Fiap@2024;"
   RabbitMQ__Host: "rabbitmq-service"
   Logging__LogLevel__Default: "Information"
