@@ -16,9 +16,11 @@ namespace WorkerMessageConsumer.Workers
         private static string _queueName = "PatchContato";
         public WorkerPatchContato(ILogger<WorkerPatchContato> logger, IServiceProvider serviceProvider)
         {
+            string hostNameRabbitMQ = Environment.GetEnvironmentVariable("RabbitMQ__Host") ?? "rabbitmq-service";
+            string portRabbitMQ = Environment.GetEnvironmentVariable("RabbitMQ__Port") ?? "5672";
             _logger = logger;
             _serviceProvider = serviceProvider;
-            var factory = new ConnectionFactory() { HostName = "rabbitmq-service", Port = 5672 };
+            var factory = new ConnectionFactory() { HostName = hostNameRabbitMQ, Port = int.Parse(portRabbitMQ) };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
 

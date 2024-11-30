@@ -15,8 +15,10 @@ namespace API.Controllers
 
         public ContatosController(IContatoCadastro contatoCadastro, IConnectionFactory rabbitConnectionFactory)
         {
+            string hostNameRabbitMQ = Environment.GetEnvironmentVariable("RabbitMQ__Host") ?? "rabbitmq-service";
+            string portRabbitMQ = Environment.GetEnvironmentVariable("RabbitMQ__Port") ?? "5672";
             _contatoCadastro = contatoCadastro;
-            _rabbitConnectionFactory = new ConnectionFactory { HostName = "rabbitmq-service", Port = 5672 };
+            _rabbitConnectionFactory = new ConnectionFactory { HostName = hostNameRabbitMQ, Port = int.Parse(portRabbitMQ) };
         }
 
         [HttpGet("Listar")]

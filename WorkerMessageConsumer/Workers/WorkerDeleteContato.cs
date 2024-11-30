@@ -15,6 +15,8 @@ namespace WorkerMessageConsumer.Workers
         private static string _queueName = "DeleteContato";
         public WorkerDeleteContato(ILogger<WorkerDeleteContato> logger, IServiceProvider serviceProvider)
         {
+            string hostNameRabbitMQ = Environment.GetEnvironmentVariable("RabbitMQ__Host") ?? "rabbitmq-service";
+            string portRabbitMQ = Environment.GetEnvironmentVariable("RabbitMQ__Port") ?? "5672";
             _logger = logger;
             _serviceProvider = serviceProvider;
             var factory = new ConnectionFactory() { HostName = "rabbitmq-service", Port = 5672 };
