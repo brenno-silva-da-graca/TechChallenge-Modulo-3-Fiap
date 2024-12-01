@@ -2,7 +2,7 @@ name: TechChallenge-Modulo-3-Fiap
 
 on:
   push:
-    branches: [ "main", "feature/**", "bugfix/**" ]
+    branches: [ "main", "feature/**", "bugfix/**", fase4Desenvolvimento ]
   pull_request:
     branches: [ "main" ]
 
