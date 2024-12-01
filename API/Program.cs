@@ -43,6 +43,9 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            //Para testes apenas
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseAuthorization();
 
