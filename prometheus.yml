@@ -7,3 +7,9 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['host.docker.internal:58745']
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['prometheus-service:9090']
+  - job_name: 'api'
+    static_configs:
+      - targets: ['api-service:8080']

@@ -15,6 +15,3 @@ data:
       - job_name: 'api'
         static_configs:
           - targets: ['api-service:8080']
-      - job_name: 'worker'
-        static_configs:
-          - targets: ['worker-service:80']
